@@ -13,8 +13,8 @@ def view_task():
         print("on tasks yet")
         return
     else:
-        for index, task in enumerate(tasks, start=1):
-            print(f"{index}. {task["task"]}, {task["completed"]}")
+        for x in tasks:
+            print(f" {x["task"]}, {x["completed"]}")
             
 def complete_task():
     view_task()
