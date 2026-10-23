@@ -1,28 +1,16 @@
-tasks=[]
-def add_task():
-    title= input("enter title input:  ").strip()
-    task={
-        "task":title,
-        "completed": False
-    }
-    tasks.append(task)
-    print("Task added successfully!")
-    
-def view_task():
+from task_service import add_task, view_task, complete_task
+from storage import load_task, save_task
+
+def show_task():
+    tasks= view_task()
     if not tasks:
-        print("on tasks yet")
+        print("No tasks found.")
         return
-    else:
-        for x in tasks:
-            print(f" {x["task"]}, {x["completed"]}")
-            
-def complete_task():
-    view_task()
-    print("\n=== add what you complete ===")
-    number= int(input("enter the nuber for the task you complete: "))
-    if 1<=number<=len(tasks):
-        tasks[number-1]["completed"]=True
-        print("Task marked as completed!")
+    for task in tasks:
+        status="done" if task["completed"] else "pending"
+        print(f' {task["title"]} [{status}]')
+
+
 def main_list():
     while True:
         print("\n=== TASK TRACKER ===")
@@ -32,7 +20,10 @@ def main_list():
         print("4. Exit")
         choice= input("enter your chice:").strip()
         if choice=="1":
-            add_task()
+            title = input("Task title: ")
+            task=add_task(title)
+            print(f'Task added: {task["task"]}')
+            
         elif choice=="2":
             view_task()
         elif choice=="3":
