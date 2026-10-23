@@ -12,7 +12,7 @@ def main_list():
         if choice=="1":
             title = input("Task title: ")
             task=add_task(title)
-            print(f'Task added: {task["task"]}')
+            print("task added")
             
         elif choice=="2":
             view_task()
