@@ -153,8 +153,8 @@ def view_task():
         print("No tasks yet.")
         return
 
-    for index, task in enumerate(tasks, start=1):
-        print(f"{index}. {task['task']}, {task['completed']}")
+    for x in tasks:
+        print(f"{x['task']}, {x['completed']}")
 ```
 
 ### `complete_task()`
