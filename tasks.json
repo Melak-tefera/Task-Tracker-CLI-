@@ -1,4 +1,10 @@
 [
-    
-    
+    {
+        "task": "take shower",
+        "completed": true
+    },
+    {
+        "task": "eat breakfast",
+        "completed": false
+    }
 ]

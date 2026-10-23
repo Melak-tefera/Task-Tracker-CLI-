@@ -1,44 +1,51 @@
-# Task-Tracker-CLI-
-# Task Tracker
+# Task Tracker CLI
 
-A simple Python command-line application for managing daily tasks. Users can add tasks, view tasks, and mark tasks as completed.
+Task Tracker CLI is a simple Python command-line application for managing daily tasks. Users can add tasks, view all tasks, mark tasks as completed, and save their tasks in a JSON file so the data remains after closing the program.
 
 ## Features
 
 - Add a new task
-- View all tasks
+- View all tasks with their status
 - Mark a task as completed
-- Automatically number tasks
+- Save tasks automatically to `tasks.json`
+- Load saved tasks when the program starts
 - Simple menu-based interface
-- Runs until the user chooses to exit
+- Basic input validation
+
+## Project Structure
+
+```text
+task-tracker/
+├── main.py           # Starts the program and shows the menu
+├── task_service.py   # Contains task operations
+├── storage.py        # Loads and saves tasks using JSON
+├── tasks.json        # Stores task data after first use
+└── README.md         # Project documentation
+```
 
 ## Requirements
 
-- Python 3
-
-Check your Python version:
-
-```bash
-python --version
-```
+- Python 3.8 or newer
+- No external Python packages are required
 
 ## How to Run
 
-1. Save the program as `task_tracker.py`.
-2. Open a terminal in the project folder.
-3. Run the program:
+1. Open a terminal in the project folder.
+2. Run the program:
 
 ```bash
-python task_tracker.py
+python main.py
 ```
 
-Or:
+On some systems, you may need to use:
 
 ```bash
-python3 task_tracker.py
+python3 main.py
 ```
 
-## Menu Options
+## How to Use
+
+When the program starts, you will see this menu:
 
 ```text
 === TASK TRACKER ===
@@ -46,220 +53,91 @@ python3 task_tracker.py
 2. View tasks
 3. Complete task
 4. Exit
+Enter your choice:
 ```
 
-### 1. Add Task
+### Add a Task
 
-Allows the user to enter a new task.
-
-Example:
+Choose `1`, then type the task title.
 
 ```text
-Enter title input: Study Python
+Enter your choice: 1
+Task title: Study Dart
 Task added successfully!
 ```
 
-### 2. View Tasks
+### View Tasks
 
-Displays all tasks with their completion status.
-
-Example:
+Choose `2` to display all saved tasks.
 
 ```text
-1. Study Python, False
-2. Buy shoes, True
+Task 1: Study Dart - Pending
+Task 2: Build Flutter app - Completed
 ```
 
-- `False` means the task is pending.
-- `True` means the task is completed.
+### Complete a Task
 
-### 3. Complete Task
-
-Displays all tasks and asks the user to enter the number of the completed task.
-
-Example:
+Choose `3`, then enter the number of the task you completed.
 
 ```text
-Enter the number for the task you complete: 1
+Enter the number of the task you completed: 1
 Task marked as completed!
 ```
 
-### 4. Exit
+### Exit
 
-Closes the program.
+Choose `4` to close the program.
 
-```text
-Goodbye!
-```
+## Data Storage
 
-## How Tasks Are Stored
+Tasks are stored in a file called `tasks.json`.
 
-Tasks are stored in a Python list.
+Each task is stored as a dictionary inside a list:
 
-```python
-tasks = []
-```
-
-Each task is a dictionary:
-
-```python
-task = {
-    "task": "Study Python",
-    "completed": False
-}
-```
-
-Example task list:
-
-```python
-tasks = [
+```json
+[
     {
-        "task": "Study Python",
-        "completed": False
+        "task": "Study Dart",
+        "completed": false
     },
     {
-        "task": "Buy shoes",
-        "completed": True
+        "task": "Build Flutter app",
+        "completed": true
     }
 ]
 ```
 
-## Main Functions
+- `"task"` stores the task title.
+- `"completed"` is `false` when the task is pending and `true` when it is completed.
+- The program creates `tasks.json` automatically after you add your first task.
 
-### `add_task()`
+## File Responsibilities
 
-Adds a new task to the task list.
+| File | Responsibility |
+|---|---|
+| `main.py` | Displays the menu and handles user choices |
+| `task_service.py` | Adds, views, and completes tasks |
+| `storage.py` | Reads and writes tasks to `tasks.json` |
+| `tasks.json` | Stores the task data |
 
-```python
-def add_task():
-    title = input("Enter title input: ").strip()
+## Error Handling
 
-    task = {
-        "task": title,
-        "completed": False
-    }
-
-    tasks.append(task)
-    print("Task added successfully!")
-```
-
-### `view_task()`
-
-Displays all tasks.
-
-```python
-def view_task():
-    if not tasks:
-        print("No tasks yet.")
-        return
-
-    for x in tasks:
-        print(f"{x['task']}, {x['completed']}")
-```
-
-### `complete_task()`
-
-Marks a selected task as completed.
-
-```python
-def complete_task():
-    view_task()
-
-    number = int(input("Enter the number for the task you complete: "))
-
-    if 1 <= number <= len(tasks):
-        tasks[number - 1]["completed"] = True
-        print("Task marked as completed!")
-```
-
-### `main_list()`
-
-Displays the main menu and controls the program flow.
-
-```python
-def main_list():
-    while True:
-        print("\n=== TASK TRACKER ===")
-        print("1. Add task")
-        print("2. View tasks")
-        print("3. Complete task")
-        print("4. Exit")
-
-        choice = input("Enter your choice: ").strip()
-
-        if choice == "1":
-            add_task()
-        elif choice == "2":
-            view_task()
-        elif choice == "3":
-            complete_task()
-        elif choice == "4":
-            print("Goodbye!")
-            break
-        else:
-            print("Invalid choice. Please choose 1-4.")
-```
-
-## Program Entry Point
-
-```python
-if __name__ == "__main__":
-    main_list()
-```
-
-This starts the program only when `task_tracker.py` is run directly.
-
-## Example Usage
-
-```text
-=== TASK TRACKER ===
-1. Add task
-2. View tasks
-3. Complete task
-4. Exit
-Enter your choice: 1
-Enter title input: Study Flutter
-Task added successfully!
-
-=== TASK TRACKER ===
-1. Add task
-2. View tasks
-3. Complete task
-4. Exit
-Enter your choice: 2
-1. Study Flutter, False
-
-=== TASK TRACKER ===
-1. Add task
-2. View tasks
-3. Complete task
-4. Exit
-Enter your choice: 3
-1. Study Flutter, False
-
-=== add what you complete ===
-Enter the number for the task you complete: 1
-Task marked as completed!
-```
-
-## Limitations
-
-- Tasks are not saved permanently.
-- Tasks disappear when the program closes.
-- There is no delete task option.
-- Invalid task numbers are not fully handled.
-- Task status is shown as `True` or `False`.
+- Empty task titles are rejected.
+- Invalid menu choices show an error message.
+- Entering text instead of a number when completing a task is handled safely.
+- Invalid task numbers are rejected.
+- If `tasks.json` contains invalid JSON, the program raises a clear error message.
 
 ## Future Improvements
 
-- Save tasks to a JSON file
-- Load tasks when the program starts
-- Add a delete task option
-- Add task deadlines
+- Delete tasks
+- Edit task titles
 - Add task priorities
-- Show `Pending` and `Completed` instead of `False` and `True`
-- Add error handling with `try` and `except`
+- Add due dates
+- Search tasks
+- Show tasks by status: pending or completed
+- Add unit tests
 
-## License
+## Author
 
-This project is created for learning purposes.
+Created by **Melak Tefera** as a Python learning project.
