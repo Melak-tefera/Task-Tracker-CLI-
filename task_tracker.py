@@ -1,16 +1,6 @@
 from task_service import add_task, view_task, complete_task
 from storage import load_task, save_task
 
-def show_task():
-    tasks= view_task()
-    if not tasks:
-        print("No tasks found.")
-        return
-    for task in tasks:
-        status="done" if task["completed"] else "pending"
-        print(f' {task["title"]} [{status}]')
-
-
 def main_list():
     while True:
         print("\n=== TASK TRACKER ===")

@@ -10,7 +10,7 @@ def add_task(title):
     tasks.append(task)
     save_task(tasks)
     print("Task added successfully!")
-    return task
+    #return task
     
 def view_task():
     return load_task()
